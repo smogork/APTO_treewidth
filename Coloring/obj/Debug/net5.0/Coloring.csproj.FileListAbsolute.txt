@@ -1,0 +1,16 @@
+/home/oskar/APTO/APTO_treewidth/Coloring/bin/Debug/net5.0/Coloring
+/home/oskar/APTO/APTO_treewidth/Coloring/bin/Debug/net5.0/Coloring.deps.json
+/home/oskar/APTO/APTO_treewidth/Coloring/bin/Debug/net5.0/Coloring.runtimeconfig.json
+/home/oskar/APTO/APTO_treewidth/Coloring/bin/Debug/net5.0/Coloring.runtimeconfig.dev.json
+/home/oskar/APTO/APTO_treewidth/Coloring/bin/Debug/net5.0/Coloring.dll
+/home/oskar/APTO/APTO_treewidth/Coloring/bin/Debug/net5.0/ref/Coloring.dll
+/home/oskar/APTO/APTO_treewidth/Coloring/bin/Debug/net5.0/Coloring.pdb
+/home/oskar/APTO/APTO_treewidth/Coloring/obj/Debug/net5.0/Coloring.csproj.AssemblyReference.cache
+/home/oskar/APTO/APTO_treewidth/Coloring/obj/Debug/net5.0/Coloring.GeneratedMSBuildEditorConfig.editorconfig
+/home/oskar/APTO/APTO_treewidth/Coloring/obj/Debug/net5.0/Coloring.AssemblyInfoInputs.cache
+/home/oskar/APTO/APTO_treewidth/Coloring/obj/Debug/net5.0/Coloring.AssemblyInfo.cs
+/home/oskar/APTO/APTO_treewidth/Coloring/obj/Debug/net5.0/Coloring.csproj.CoreCompileInputs.cache
+/home/oskar/APTO/APTO_treewidth/Coloring/obj/Debug/net5.0/Coloring.dll
+/home/oskar/APTO/APTO_treewidth/Coloring/obj/Debug/net5.0/ref/Coloring.dll
+/home/oskar/APTO/APTO_treewidth/Coloring/obj/Debug/net5.0/Coloring.pdb
+/home/oskar/APTO/APTO_treewidth/Coloring/obj/Debug/net5.0/Coloring.genruntimeconfig.cache
