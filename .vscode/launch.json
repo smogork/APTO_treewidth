@@ -5,17 +5,37 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debug: g6 -> gxmml",
+            "name": "Debug: g6 -> pace",
             "type": "python",
             "request": "launch",
-            "program": "graph6_to_GXMML.py",
+            "program": "graph6_to_PACE.py",
             "console": "integratedTerminal",
-            "args": ["graphs/trees/trees09.g6", "test.gr"],
+            "args": ["graphs/trees/graph6/trees09.g6", "graphs/trees/pace/test"],
             "env": 
             {
                 "PYTHONPATH": "${workspaceFolder}/libraries/networkxxgmml"
             }
         },
-
+        {
+            "name": "Debug: PACE",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "flow-cutter-pace17/flow_cutter_pace17",
+            "args": ["graphs/trees/pace/test_1.gr"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+              {
+                "description": "Enable pretty-printing for gdb",
+                "text": "-enable-pretty-printing",
+                "ignoreFailures": true
+              }
+            ],
+            "preLaunchTask": "build PACE",
+            "miDebuggerPath": "/usr/bin/gdb"
+          }
     ]
 }
