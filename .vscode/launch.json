@@ -10,7 +10,7 @@
             "request": "launch",
             "program": "graph6_to_PACE.py",
             "console": "integratedTerminal",
-            "args": ["graphs/trees/graph6/trees09.g6", "graphs/trees/pace/test"],
+            "args": ["graphs/graph6/trees/trees09.g6", "graphs/pace/trees/test"],
         },
         {
             "name": "Debug: PACE",
