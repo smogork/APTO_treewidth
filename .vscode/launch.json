@@ -11,10 +11,6 @@
             "program": "graph6_to_PACE.py",
             "console": "integratedTerminal",
             "args": ["graphs/trees/graph6/trees09.g6", "graphs/trees/pace/test"],
-            "env": 
-            {
-                "PYTHONPATH": "${workspaceFolder}/libraries/networkxxgmml"
-            }
         },
         {
             "name": "Debug: PACE",
