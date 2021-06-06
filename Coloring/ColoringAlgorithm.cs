@@ -9,7 +9,7 @@ namespace Coloring
         List<int>[] Graph;
         bool[,] GraphMatrix;
         int NumberOfColors;
-        int[] ResultColoring;
+        public int[] ResultColoring;
         int DecompositionNodesCount;
         public ColoringAlgorithm(DecompositionNode DecompositionRoot, bool[,] GraphMatrix, int NumberOfColors)
         {
@@ -17,6 +17,7 @@ namespace Coloring
             this.GraphMatrix = GraphMatrix;
             this.NumberOfColors = NumberOfColors;
             this.DecompositionNodesCount = GraphMatrix.GetUpperBound(1);
+            Console.WriteLine(this.DecompositionNodesCount);
         }
         public void FindColoring()
         {
@@ -50,9 +51,10 @@ namespace Coloring
                 bool correctColoring = true;
                 for (i = 0; i < decompositionNode.Vertices.Count; ++i)
                     for (int j = i + 1; j < decompositionNode.Vertices.Count; ++j)
-                        if (GraphMatrix[decompositionNode.Vertices[i], decompositionNode.Vertices[j]])
+                        if (GraphMatrix[decompositionNode.Vertices[i], decompositionNode.Vertices[j]]
+                            && colors[decompositionNode.Vertices[i]] == colors[decompositionNode.Vertices[j]])
                         {
-                            correctColoring = true;
+                            correctColoring = false;
                             break;
                         }
                 if (!correctColoring)
