@@ -151,8 +151,6 @@ namespace Coloring
                 for (i = 0; i < decompositionNode.Children.Count; ++i)
                 {
                     tmp = GetCommonColoringNumber(decompositionNode.Children[i], colors);
-                    if (tmp >= decompositionNode.Children[i].dp.Length)
-                        Console.WriteLine("CHUJ");
                     if (decompositionNode.Children[i].dp[tmp] == -1)
                     {
                         childrenApprove = false;
