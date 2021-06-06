@@ -11,12 +11,16 @@ namespace Coloring
         int NumberOfColors;
         public int[] ResultColoring;
         int DecompositionNodesCount;
-        public ColoringAlgorithm(DecompositionNode DecompositionRoot, bool[,] GraphMatrix, int NumberOfColors)
+        public ColoringAlgorithm(string filename)
         {
-            this.DecompositionRoot = DecompositionRoot;
-            this.GraphMatrix = GraphMatrix;
-            this.NumberOfColors = NumberOfColors;
-            this.DecompositionNodesCount = GraphMatrix.GetUpperBound(1);
+            throw new NotImplementedException();
+        }
+        public ColoringAlgorithm(DecompositionNode decompositionRoot, bool[,] graphMatrix, int numberOfColors)
+        {
+            this.DecompositionRoot = decompositionRoot;
+            this.GraphMatrix = graphMatrix;
+            this.NumberOfColors = numberOfColors;
+            this.DecompositionNodesCount = graphMatrix.GetUpperBound(1);
             Console.WriteLine(this.DecompositionNodesCount);
         }
         public void FindColoring()
@@ -51,8 +55,8 @@ namespace Coloring
                 bool correctColoring = true;
                 for (i = 0; i < decompositionNode.Vertices.Count; ++i)
                     for (int j = i + 1; j < decompositionNode.Vertices.Count; ++j)
-                        if (GraphMatrix[decompositionNode.Vertices[i], decompositionNode.Vertices[j]]
-                            && colors[decompositionNode.Vertices[i]] == colors[decompositionNode.Vertices[j]])
+                        if (GraphMatrix[decompositionNode.Vertices[i], decompositionNode.Vertices[j]] && 
+                            colors[decompositionNode.Vertices[i]] == colors[decompositionNode.Vertices[j]])
                         {
                             correctColoring = false;
                             break;
