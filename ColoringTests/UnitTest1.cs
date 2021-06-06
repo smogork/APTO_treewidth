@@ -55,11 +55,16 @@ namespace ColoringTests
         [TestMethod]
         public void TestMethod2()
         {
-            /*var coloringAlgorithm = new ColoringAlgorithm("/home/oskar/APTO/APTO_treewidth/flow-cutter-pace17/flow-cutter-pace17/output.gr");
+            /*var coloringAlgorithm = new ColoringAlgorithm("/home/oskar/APTO/APTO_treewidth/graphs/pace/trees/test_1.gr", "/home/oskar/RiderProjects/APTO_treewidth/flow-cutter-pace17/test_1.td", 10);
+            for (int i = 0; i < coloringAlgorithm.GraphMatrix.Get; ++i)
+            {
+                for (int j = 0; j < coloringAlgorithm.GraphMatrix; ++j)
+                    Console.Write(coloringAlgorithm.GraphMatrix[i, j] ? 1 : 0);
+                Console.WriteLine();
+            }
+
             coloringAlgorithm.FindColoring();
-            for (int i = 1; i < coloringAlgorithm.ResultColoring.Length; ++i)
-                Console.WriteLine("{0} {1}", i, coloringAlgorithm.ResultColoring[i]);
-            Assert.IsTrue(CheckColoring(coloringAlgorithm.ResultColoring, graphMatrix));*/
+            Assert.IsFalse(CheckColoring(coloringAlgorithm.ResultColoring, coloringAlgorithm.GraphMatrix));*/
         }
     }
 }

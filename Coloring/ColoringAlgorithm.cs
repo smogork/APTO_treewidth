@@ -8,7 +8,7 @@ namespace Coloring
     {
         DecompositionNode DecompositionRoot;
         //List<int>[] Graph; // todo jak będzie szybszy alg
-        bool[,] GraphMatrix;
+        public bool[,] GraphMatrix;
         int NumberOfColors;
         public int[] ResultColoring;
         int NumberOfGraphNodes;
@@ -16,15 +16,15 @@ namespace Coloring
         private List<int>[] neighbours;
         private bool[] visited;
         private DecompositionNode[] decompositionNodes;
-        public ColoringAlgorithm(string filePathToGraph, string filePathToDecomposition)
+        public ColoringAlgorithm(string filePathToGraph, string filePathToDecomposition, int numberOfColors)
         {
             ReadGraph(filePathToGraph);
             ReadDecomposition(filePathToDecomposition);
+            this.NumberOfColors = numberOfColors;
         }
         private void ReadGraph(string filePath)
         {
-            string line;  
-            
+            string line;
             System.IO.StreamReader file =
                 new System.IO.StreamReader(filePath);  
             while((line = file.ReadLine()) != null)  
@@ -33,7 +33,10 @@ namespace Coloring
                     continue;
                 string[] subs = line.Split(' ');
                 if (subs[0] == "p")
-                    this.GraphMatrix = new bool[Convert.ToInt32(subs[2]), Convert.ToInt32(subs[3])];
+                {
+                    this.NumberOfGraphNodes = Convert.ToInt32(subs[2]);
+                    this.GraphMatrix = new bool[this.NumberOfGraphNodes + 1, this.NumberOfGraphNodes + 1];
+                }
                 else
                 {
                     int v1 = Convert.ToInt32(subs[0]);
@@ -48,7 +51,6 @@ namespace Coloring
         {
             string line;  
             int numberOfDecompositionNodes = 0;
-            
             System.IO.StreamReader file =
                 new System.IO.StreamReader(filePath);  
             while((line = file.ReadLine()) != null)  
@@ -103,7 +105,7 @@ namespace Coloring
             this.GraphMatrix = graphMatrix;
             this.NumberOfColors = numberOfColors;
             this.NumberOfGraphNodes = graphMatrix.GetUpperBound(1);
-            Console.WriteLine(this.NumberOfGraphNodes);
+            
         }
         public void FindColoring()
         {
@@ -138,10 +140,10 @@ namespace Coloring
                     for (int j = i + 1; j < decompositionNode.Vertices.Count; ++j)
                         if (GraphMatrix[decompositionNode.Vertices[i], decompositionNode.Vertices[j]] && 
                             colors[decompositionNode.Vertices[i]] == colors[decompositionNode.Vertices[j]])
-                        {
-                            correctColoring = false;
-                            break;
-                        }
+                            {
+                                correctColoring = false;
+                                break;
+                            }
                 if (!correctColoring)
                     continue;
                 bool childrenApprove = true;
@@ -152,7 +154,7 @@ namespace Coloring
                     powK = 1;
                     for (int j = 0; j < decompositionNode.Children[i].Common.Count; ++j)
                     {
-                        tmp += colors[decompositionNode.Children[i].Common[i]] * powK;
+                        tmp += colors[decompositionNode.Children[i].Common[j]] * powK;
                         powK *= NumberOfColors;
                     }
                     if (decompositionNode.Children[i].dp[tmp] == -1)
