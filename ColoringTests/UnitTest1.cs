@@ -8,6 +8,34 @@ namespace ColoringTests
     [TestClass]
     public class UnitTest1
     {
+        private bool CheckColoring(int[] colors, bool[,] graph)
+        {
+            if (colors == null)
+                return false;
+            bool correctColoring = true;
+            for (int i = 0; i < colors.Length; ++i)
+                for (int j = i + 1; j < colors.Length; ++j)
+                    if (graph[i, j] && colors[i] == colors[j])
+                    {
+                        correctColoring = false;
+                        break;
+                    }
+            return correctColoring;
+        }
+        private bool CheckColoring(int[] colors, List<int> graph)
+        {
+            if (colors == null)
+                return false;
+            bool correctColoring = true;
+            for (int i = 0; i < colors.Length; ++i)
+                foreach (int j in graph)
+                    if (colors[i] == colors[j])
+                    {
+                        correctColoring = false;
+                        break;
+                    }
+            return correctColoring;
+        }
         [TestMethod]
         public void TestMethod1()
         {
@@ -20,8 +48,9 @@ namespace ColoringTests
             graphMatrix[2, 1] = true;
             var coloringAlgorithm = new ColoringAlgorithm(root, graphMatrix, 2);
             coloringAlgorithm.FindColoring();
-            for (int i = 1; i <= coloringAlgorithm.ResultColoring.Length; ++i)
+            for (int i = 1; i < coloringAlgorithm.ResultColoring.Length; ++i)
                 Console.WriteLine("{0} {1}", i, coloringAlgorithm.ResultColoring[i]);
+            Assert.IsTrue(CheckColoring(coloringAlgorithm.ResultColoring, graphMatrix));
         }
     }
 }
