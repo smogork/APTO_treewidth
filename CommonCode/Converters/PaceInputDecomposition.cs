@@ -6,7 +6,7 @@ namespace CommonCode.Converters
 {
     public static class PaceInputDecomposition
     {
-        public (DecompositionNode root, int treewidth, int veticesCount) Parse(System.IO.Stream stream)
+        public static (DecompositionNode root, int treewidth, int veticesCount) Parse(System.IO.Stream stream)
         {
             var reader = new StreamReader(stream);
             string line = reader.ReadLine();
