@@ -11,7 +11,7 @@ namespace Coloring
         public bool[,] GraphMatrix;
         int NumberOfColors;
         public int[] ResultColoring;
-        int NumberOfGraphNodes;
+        public int NumberOfGraphNodes;
         // pola pomocnicze do konwersji PACE -> C#
         private List<int>[] neighbours;
         private bool[] visited;
@@ -84,7 +84,7 @@ namespace Coloring
             }
             decompositionNodes[1].Parent = new DecompositionNode(new List<DecompositionNode>(){ decompositionNodes[1] }, null, new List<int>());
             this.DecompositionRoot = decompositionNodes[1];
-            visited = Enumerable.Repeat(false, numberOfDecompositionNodes + 1).ToArray();
+            visited = new bool[numberOfDecompositionNodes + 1];
             SetParenthood(1);
             file.Close();  
         }
@@ -123,7 +123,8 @@ namespace Coloring
                     if (decompositionNode.Vertices[i] == decompositionNode.Parent.Vertices[j])
                         decompositionNode.Common.Add(decompositionNode.Vertices[i]);
             int combinationsCount = (int)Math.Pow(NumberOfColors, decompositionNode.Vertices.Count);
-            decompositionNode.dp = new int[combinationsCount];
+            int combinationsCommonCount = (int)Math.Pow(NumberOfColors, decompositionNode.Common.Count);
+            decompositionNode.dp = Enumerable.Repeat(-1, combinationsCommonCount).ToArray();
             for (int number = 0; number < combinationsCount; ++number)
             {
                 int[] colors = new int[this.NumberOfGraphNodes + 1];
@@ -140,32 +141,24 @@ namespace Coloring
                     for (int j = i + 1; j < decompositionNode.Vertices.Count; ++j)
                         if (GraphMatrix[decompositionNode.Vertices[i], decompositionNode.Vertices[j]] && 
                             colors[decompositionNode.Vertices[i]] == colors[decompositionNode.Vertices[j]])
-                            {
-                                correctColoring = false;
-                                break;
-                            }
+                        {
+                            correctColoring = false;
+                            break;
+                        }
                 if (!correctColoring)
                     continue;
                 bool childrenApprove = true;
-                int powK;
                 for (i = 0; i < decompositionNode.Children.Count; ++i)
                 {
-                    tmp = 0;
-                    powK = 1;
-                    for (int j = 0; j < decompositionNode.Children[i].Common.Count; ++j)
-                    {
-                        tmp += colors[decompositionNode.Children[i].Common[j]] * powK;
-                        powK *= NumberOfColors;
-                    }
+                    tmp = GetCommonColoringNumber(decompositionNode, colors);
                     if (decompositionNode.Children[i].dp[tmp] == -1)
                     {
                         childrenApprove = false;
                         break;
                     }
                 }
-                if (!childrenApprove)
-                    continue;
-                decompositionNode.dp[GetCommonColoringNumber(decompositionNode, colors)] = number;
+                if (childrenApprove)
+                    decompositionNode.dp[GetCommonColoringNumber(decompositionNode, colors)] = number;
             }
         }
         private bool GetColoring()
@@ -191,13 +184,14 @@ namespace Coloring
                 i++;
             }
             for (i = 0; i < decompositionNode.Children.Count; ++i)
-                GetColoringRecursive(decompositionNode.Children[i], GetCommonColoringNumber(decompositionNode, ResultColoring));
+                GetColoringRecursive(decompositionNode.Children[i], 
+                    decompositionNode.Children[i].dp[GetCommonColoringNumber(decompositionNode.Children[i], ResultColoring)]);
         }
         private int GetCommonColoringNumber(DecompositionNode decompositionNode, int[] colors)
         {
             int tmp = 0;
             int powK = 1;
-            for (int i = 0; i < decompositionNode.Common.Count; ++i)
+            for (int i = decompositionNode.Common.Count - 1; i >= 0; --i)
             {
                 tmp += colors[decompositionNode.Common[i]] * powK;
                 powK *= NumberOfColors;

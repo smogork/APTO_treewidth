@@ -13,7 +13,7 @@ namespace ColoringTests
             if (colors == null)
                 return false;
             bool correctColoring = true;
-            for (int i = 0; i < colors.Length; ++i)
+            for (int i = 1; i < colors.Length; ++i)
                 for (int j = i + 1; j < colors.Length; ++j)
                     if (graph[i, j] && colors[i] == colors[j])
                     {
@@ -27,7 +27,7 @@ namespace ColoringTests
             if (colors == null)
                 return false;
             bool correctColoring = true;
-            for (int i = 0; i < colors.Length; ++i)
+            for (int i = 1; i < colors.Length; ++i)
                 foreach (int j in graph)
                     if (colors[i] == colors[j])
                     {
@@ -53,18 +53,16 @@ namespace ColoringTests
             Assert.IsTrue(CheckColoring(coloringAlgorithm.ResultColoring, graphMatrix));
         }
         [TestMethod]
-        public void TestMethod2()
+        public void TestColoringFromPace()
         {
-            /*var coloringAlgorithm = new ColoringAlgorithm("/home/oskar/APTO/APTO_treewidth/graphs/pace/trees/test_1.gr", "/home/oskar/RiderProjects/APTO_treewidth/flow-cutter-pace17/test_1.td", 10);
-            for (int i = 0; i < coloringAlgorithm.GraphMatrix.Get; ++i)
-            {
-                for (int j = 0; j < coloringAlgorithm.GraphMatrix; ++j)
-                    Console.Write(coloringAlgorithm.GraphMatrix[i, j] ? 1 : 0);
-                Console.WriteLine();
-            }
-
+            var coloringAlgorithm = new ColoringAlgorithm("/home/oskar/APTO/APTO_treewidth/graphs/pace/trees/test_1.gr",
+                "/home/oskar/RiderProjects/APTO_treewidth/flow-cutter-pace17/test_1.td", 2);
+            Console.WriteLine();
             coloringAlgorithm.FindColoring();
-            Assert.IsFalse(CheckColoring(coloringAlgorithm.ResultColoring, coloringAlgorithm.GraphMatrix));*/
+            Console.WriteLine("Colors:");
+            for (int i = 1; i <= coloringAlgorithm.NumberOfGraphNodes; ++i)
+                Console.Write(coloringAlgorithm.ResultColoring[i]);
+            Assert.IsTrue(CheckColoring(coloringAlgorithm.ResultColoring, coloringAlgorithm.GraphMatrix));
         }
     }
 }
