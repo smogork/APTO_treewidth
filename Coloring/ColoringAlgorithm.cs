@@ -63,8 +63,6 @@ namespace Coloring
                     for (int i = 1; i <= numberOfDecompositionNodes; ++i)
                         neighbours[i] = new List<int>();
                     decompositionNodes = new DecompositionNode[numberOfDecompositionNodes + 1];
-                    //int numberOfVertices = Convert.ToInt32(subs[4]);
-                    //this.GraphMatrix = new bool[numberOfVertices + 1, numberOfVertices + 1];
                 }
                 else if (subs[0] == "b")
                 {
@@ -109,8 +107,7 @@ namespace Coloring
         }
         public void FindColoring()
         {
-            if (Graph == null)
-                FindColoringInWorseTime(DecompositionRoot);
+            FindColoringInWorseTime(DecompositionRoot);
             if (GetColoring())
                 Console.WriteLine("Coloring found");
         }
