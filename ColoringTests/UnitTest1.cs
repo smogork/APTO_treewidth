@@ -2,6 +2,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Coloring;
 using System.Collections.Generic;
 using System;
+using CommonCode;
 
 namespace ColoringTests
 {
