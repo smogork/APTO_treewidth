@@ -15,7 +15,6 @@ namespace Coloring
             this.Children = Children;
             this.Parent = Parent;
             this.Vertices = Vertices;
-            this.dp = Enumerable.Repeat(-1, Vertices.Count).ToArray();
         }
         public DecompositionNode (List<int> Vertices)
         {
