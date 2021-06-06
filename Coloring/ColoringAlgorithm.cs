@@ -7,7 +7,7 @@ namespace Coloring
     public class ColoringAlgorithm
     {
         DecompositionNode DecompositionRoot;
-        //List<int>[] Graph; // todo jak będzie szybszy alg
+        //List<int>[] Graph;  todo jak będzie szybszy alg
         public bool[,] GraphMatrix;
         int NumberOfColors;
         public int[] ResultColoring;
@@ -105,13 +105,13 @@ namespace Coloring
             this.GraphMatrix = graphMatrix;
             this.NumberOfColors = numberOfColors;
             this.NumberOfGraphNodes = graphMatrix.GetUpperBound(1);
-            
         }
-        public void FindColoring()
+        public bool FindColoring()
         {
             FindColoringInWorseTime(DecompositionRoot);
             if (GetColoring())
-                Console.WriteLine("Coloring found");
+                return true;
+            return false;
         }
         private void FindColoringInWorseTime(DecompositionNode decompositionNode)
         {
@@ -163,13 +163,12 @@ namespace Coloring
         }
         private bool GetColoring()
         {
-            for (int i = 0; i < DecompositionRoot.dp.Length; ++i)
-                if (DecompositionRoot.dp[i] != -1)
-                {
-                    ResultColoring = new int[NumberOfGraphNodes + 1];
-                    GetColoringRecursive(DecompositionRoot, DecompositionRoot.dp[i]);
-                    return true;
-                }
+            if (DecompositionRoot.dp[0] != -1)
+            {
+                ResultColoring = new int[NumberOfGraphNodes + 1];
+                GetColoringRecursive(DecompositionRoot, DecompositionRoot.dp[0]);
+                return true;
+            }
             return false;
 
         }
@@ -191,7 +190,7 @@ namespace Coloring
         {
             int tmp = 0;
             int powK = 1;
-            for (int i = decompositionNode.Common.Count - 1; i >= 0; --i)
+            for (int i = 0; i < decompositionNode.Common.Count; ++i)
             {
                 tmp += colors[decompositionNode.Common[i]] * powK;
                 powK *= NumberOfColors;
