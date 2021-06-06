@@ -21,6 +21,35 @@
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach"
+        },
+        {
+            "name": "Debug: g6 -> pace",
+            "type": "python",
+            "request": "launch",
+            "program": "graph6_to_PACE.py",
+            "console": "integratedTerminal",
+            "args": ["graphs/graph6/trees/trees09.g6", "graphs/pace/trees/test"]
+        },
+        {
+            "name": "Debug: PACE",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "flow-cutter-pace17/flow_cutter_pace17",
+            "args": ["graphs/trees/pace/test_1.gr"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                "description": "Enable pretty-printing for gdb",
+                "text": "-enable-pretty-printing",
+                "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "build PACE",
+            "miDebuggerPath": "/usr/bin/gdb"
         }
     ]
 }
