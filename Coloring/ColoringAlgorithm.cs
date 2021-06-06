@@ -124,7 +124,7 @@ namespace Coloring
                         decompositionNode.Common.Add(decompositionNode.Vertices[i]);
             int combinationsCount = (int)Math.Pow(NumberOfColors, decompositionNode.Vertices.Count);
             int combinationsCommonCount = (int)Math.Pow(NumberOfColors, decompositionNode.Common.Count);
-            decompositionNode.dp = Enumerable.Repeat(-1, combinationsCommonCount).ToArray();
+            decompositionNode.dp = Enumerable.Repeat(-1, combinationsCommonCount + 1).ToArray();
             for (int number = 0; number < combinationsCount; ++number)
             {
                 int[] colors = new int[this.NumberOfGraphNodes + 1];
@@ -150,7 +150,9 @@ namespace Coloring
                 bool childrenApprove = true;
                 for (i = 0; i < decompositionNode.Children.Count; ++i)
                 {
-                    tmp = GetCommonColoringNumber(decompositionNode, colors);
+                    tmp = GetCommonColoringNumber(decompositionNode.Children[i], colors);
+                    if (tmp >= decompositionNode.Children[i].dp.Length)
+                        Console.WriteLine("CHUJ");
                     if (decompositionNode.Children[i].dp[tmp] == -1)
                     {
                         childrenApprove = false;
