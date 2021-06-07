@@ -6,11 +6,25 @@ namespace CommonCode.Converters
 {
     public class PaceInputDecomposition
     {
-        public (DecompositionNode root, int treewidth, int veticesCount) Parse(System.IO.Stream stream)
+        private string[] NextLine(StreamReader stream)
+        {
+            string[] splitted;
+            string line;
+            do
+            {
+                line = stream.ReadLine();
+                if (line == null)
+                    return null;
+                splitted = line.Split(' ');
+            } while (splitted[0] == "c");
+
+            return splitted;
+        }
+        
+        public (DecompositionNode root, int treewidth, int verticesCount) Parse(Stream stream)
         {
             var reader = new StreamReader(stream);
-            string line = reader.ReadLine();
-            string[] header = line.Split(' ');
+            string[] header = NextLine(reader);
             
             if (header.Length != 5 || header[0] != "s" || header[1] != "td")
                 throw new ArgumentException($"Wrong header encountered");
@@ -23,8 +37,7 @@ namespace CommonCode.Converters
             DecompositionNode[] bags = new DecompositionNode[bagsCount];
             for (int i = 0; i < bagsCount; ++i)
             {
-                line = reader.ReadLine();
-                string[] bag = line.Split(' ');
+                string[] bag = NextLine(reader);
                 
                 if (bag[0] != "b" || int.Parse(bag[1]) - 1 != i)
                     throw new ArgumentException($"Bag {i + 1} error: wrong format");
@@ -38,8 +51,7 @@ namespace CommonCode.Converters
             //Dodatkowo krawędź skierowana jest z ojca na syna
             for (int i = 0; i < bagsCount - 1; ++i)
             {
-                line = reader.ReadLine();
-                string[] edge = line.Split(' ');
+                string[] edge = NextLine(reader);
                 
                 if (edge.Length != 2)
                     throw new ArgumentException($"Edge{i + 1} error: wrong format");

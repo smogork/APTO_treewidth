@@ -10,7 +10,7 @@ namespace CommonCode.Converters
     /// <summary>
     /// Klasa odpowiada za wyksportowanie wyniku dekompozycji do formatu zgodnego z PACE17
     /// </summary>
-    public class PaceOutput
+    public class PaceOutputDecomposition
     {
         private List<List<int>> bags;
         private List<(int u, int v)> edges;
@@ -35,12 +35,13 @@ namespace CommonCode.Converters
                 StringBuilder str = new StringBuilder();
                 str.AppendFormat("b {0}", i++);
                 foreach (int vertex in vertices)
-                    str.AppendFormat(" {0}", vertex);
+                    str.AppendFormat(" {0}", vertex + 1);
                 writer.WriteLine(str.ToString());
             }
 
             foreach ((int u, int v) in edges)
                 writer.WriteLine("{0} {1}", u, v);
+            writer.Flush();
         }
 
         private void BreadthSearch(DecompositionNode root)
