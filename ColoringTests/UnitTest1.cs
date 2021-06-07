@@ -14,7 +14,7 @@ namespace ColoringTests
             if (colors == null)
                 return false;
             bool correctColoring = true;
-            for (int i = 0; i < colors.Length; ++i)
+            for (int i = 1; i < colors.Length; ++i)
                 for (int j = i + 1; j < colors.Length; ++j)
                     if (graph[i, j] && colors[i] == colors[j])
                     {
@@ -28,7 +28,7 @@ namespace ColoringTests
             if (colors == null)
                 return false;
             bool correctColoring = true;
-            for (int i = 0; i < colors.Length; ++i)
+            for (int i = 1; i < colors.Length; ++i)
                 foreach (int j in graph)
                     if (colors[i] == colors[j])
                     {
@@ -36,6 +36,32 @@ namespace ColoringTests
                         break;
                     }
             return correctColoring;
+        }
+        [TestMethod]
+        public void TestColoringFromPace()
+        {
+            for (int i = 21; i <= 30; ++i)
+            {
+                var coloringAlgorithm = new ColoringAlgorithm("/home/oskar/RiderProjects/APTO_treewidth/graphs/pace/graphs/test_" + Convert.ToString(i) + ".gr",
+                    "/home/oskar/RiderProjects/APTO_treewidth/graphs/pace/graphsDecompositions/test_" + Convert.ToString(i) + ".td", 5);
+                if (coloringAlgorithm.FindColoring())
+                {
+                    Console.Write("{0} Found ", i);
+                    var correct = CheckColoring(coloringAlgorithm.ResultColoring, coloringAlgorithm.GraphMatrix);
+                    if (!correct)
+                    {
+                        Console.WriteLine("Error in test {0}", i);
+                        Console.WriteLine("Colors:");
+                        for (int j = 1; j <= coloringAlgorithm.NumberOfGraphNodes; ++j)
+                            Console.WriteLine("Node {0} got color {1}", j, coloringAlgorithm.ResultColoring[j]);
+                        Console.WriteLine();
+                    }
+                    Assert.IsTrue(correct);
+                    Console.WriteLine("OK");
+                }
+                else
+                    Console.WriteLine("Not found");
+            }
         }
         [TestMethod]
         public void TestMethod1()
@@ -52,20 +78,6 @@ namespace ColoringTests
             for (int i = 1; i < coloringAlgorithm.ResultColoring.Length; ++i)
                 Console.WriteLine("{0} {1}", i, coloringAlgorithm.ResultColoring[i]);
             Assert.IsTrue(CheckColoring(coloringAlgorithm.ResultColoring, graphMatrix));
-        }
-        [TestMethod]
-        public void TestMethod2()
-        {
-            /*var coloringAlgorithm = new ColoringAlgorithm("/home/oskar/APTO/APTO_treewidth/graphs/pace/trees/test_1.gr", "/home/oskar/RiderProjects/APTO_treewidth/flow-cutter-pace17/test_1.td", 10);
-            for (int i = 0; i < coloringAlgorithm.GraphMatrix.Get; ++i)
-            {
-                for (int j = 0; j < coloringAlgorithm.GraphMatrix; ++j)
-                    Console.Write(coloringAlgorithm.GraphMatrix[i, j] ? 1 : 0);
-                Console.WriteLine();
-            }
-
-            coloringAlgorithm.FindColoring();
-            Assert.IsFalse(CheckColoring(coloringAlgorithm.ResultColoring, coloringAlgorithm.GraphMatrix));*/
         }
     }
 }
