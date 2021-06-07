@@ -25,6 +25,7 @@ namespace CommonCode
         /// ???
         /// </summary>
         public int[] dp { get; set; }
+        
         public DecompositionNode(List<DecompositionNode> Children, DecompositionNode Parent, IEnumerable<int> Vertices)
         {
             this.Children = Children;
