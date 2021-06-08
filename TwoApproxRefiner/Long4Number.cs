@@ -1,3 +1,4 @@
+using System;
 using System.Security.Cryptography;
 
 namespace TwoApproxRefiner
@@ -9,6 +10,7 @@ namespace TwoApproxRefiner
     public class Long4Number
     {
         public byte[] Representation { get; private set; }
+        public int Length => Representation.Length;
         
         /// <summary>
         /// Tworzy liczbę 0 o zadanej ilości zanków.
@@ -22,7 +24,8 @@ namespace TwoApproxRefiner
         /// <summary>
         /// Zwiększa liczbę o 1.
         /// </summary>
-        public void Increment()
+        /// <returns>True - udana inkrementacja, false - overflow</returns>
+        public bool Increment()
         {
             int i = 0;
             bool carriage = false;
@@ -34,10 +37,15 @@ namespace TwoApproxRefiner
                 {
                     carriage = true;
                     Representation[i] = 0;
+                    i++;
                 }
                 else
                     carriage = false;
-            } while (carriage);
+            } while (carriage && i < Representation.Length);
+
+            if (i == Representation.Length)
+                return false;
+            return true;
         }
         
        
