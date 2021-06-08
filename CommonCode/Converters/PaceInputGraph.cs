@@ -20,7 +20,7 @@ namespace CommonCode.Converters
             int edgesCount = int.Parse(header[3]);
 
             Graph result = new Graph(verticesCount);
-            for (int i = 0; i < result.VerticesCount; ++i)
+            for (int i = 0; i < edgesCount; ++i)
             {
                 string[] edge = NextLine(reader);
                 

@@ -23,16 +23,14 @@ namespace TwoApproxRefiner
             }
         }
         
-        private static object ReadGraph(string path)
+        private static Graph ReadGraph(string path)
         {
             PaceInputGraph parser = new PaceInputGraph();
 
             using (Stream input = File.Open(path, FileMode.Open))
             {
-                //return parser.Parse(input);
+                return parser.Parse(input);
             }
-
-            return null;
         }
 
         private static void SaveDecomposition(string path, DecompositionNode root, int tw, int verticesCount)
@@ -59,6 +57,7 @@ namespace TwoApproxRefiner
         {
             //1. Wczytaj dane z pliku
             var decomp = ReadDecomposition(opts.InputDecompositionPath);
+            Graph g = ReadGraph(opts.InputGraphPath);
 
             //2. Wykonaj algorytm
 
