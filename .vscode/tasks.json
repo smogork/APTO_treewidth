@@ -1,12 +1,50 @@
 {
-    "version": "2.0.0",
-    "tasks": [
+  "version": "2.0.0",
+  "tasks": [
+      {
+          "label": "build",
+          "command": "dotnet",
+          "type": "process",
+          "args": [
+              "build",
+              "${workspaceFolder}/Coloring/Coloring.csproj",
+              "/property:GenerateFullPaths=true",
+              "/consoleloggerparameters:NoSummary"
+          ],
+          "problemMatcher": "$msCompile"
+      },
+      {
+          "label": "publish",
+          "command": "dotnet",
+          "type": "process",
+          "args": [
+              "publish",
+              "${workspaceFolder}/Coloring/Coloring.csproj",
+              "/property:GenerateFullPaths=true",
+              "/consoleloggerparameters:NoSummary"
+          ],
+          "problemMatcher": "$msCompile"
+      },
+      {
+          "label": "watch",
+          "command": "dotnet",
+          "type": "process",
+          "args": [
+              "watch",
+              "run",
+              "${workspaceFolder}/Coloring/Coloring.csproj",
+              "/property:GenerateFullPaths=true",
+              "/consoleloggerparameters:NoSummary"
+          ],
+          "problemMatcher": "$msCompile"
+      },
       {
         "type": "shell",
         "label": "build PACE",
         "command": "make",
         "args": ["-C", "${workspaceFolder}/flow-cutter-pace17"],
-        "options": {
+        "options": 
+        {
           "cwd": "/usr/bin"
         },
         "problemMatcher": ["$gcc"],
