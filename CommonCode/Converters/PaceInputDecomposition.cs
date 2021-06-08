@@ -4,23 +4,8 @@ using System.Linq;
 
 namespace CommonCode.Converters
 {
-    public class PaceInputDecomposition
+    public class PaceInputDecomposition: PaceInput
     {
-        private string[] NextLine(StreamReader stream)
-        {
-            string[] splitted;
-            string line;
-            do
-            {
-                line = stream.ReadLine();
-                if (line == null)
-                    return null;
-                splitted = line.Split(' ');
-            } while (splitted[0] == "c");
-
-            return splitted;
-        }
-        
         public (DecompositionNode root, int treewidth, int verticesCount) Parse(Stream stream)
         {
             var reader = new StreamReader(stream);
