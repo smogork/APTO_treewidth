@@ -13,9 +13,19 @@ namespace TwoApproxRefiner
     /// </summary>
     class Program
     {
-        private static (DecompositionNode root, int treewidth, int verticesCount) InsertDecomposition(string path)
+        private static (DecompositionNode root, int treewidth, int verticesCount) ReadDecomposition(string path)
         {
             PaceInputDecomposition parser = new PaceInputDecomposition();
+
+            using (Stream input = File.Open(path, FileMode.Open))
+            {
+                return parser.Parse(input);
+            }
+        }
+        
+        private static Graph ReadGraph(string path)
+        {
+            PaceInputGraph parser = new PaceInputGraph();
 
             using (Stream input = File.Open(path, FileMode.Open))
             {
@@ -46,12 +56,15 @@ namespace TwoApproxRefiner
         static void RunOptions(Options opts)
         {
             //1. Wczytaj dane z pliku
-            var decomp = InsertDecomposition(opts.InputPath);
+            var decomp = ReadDecomposition(opts.InputDecompositionPath);
+            Graph g = ReadGraph(opts.InputGraphPath);
 
             //2. Wykonaj algorytm
+            Refiner refiner = new Refiner(g, decomp.root, decomp.treewidth);
+            (DecompositionNode newDecomp, int newTreeWidth) = refiner.RefineDecomposition();
 
             //3. Wypisz wyniki
-            SaveDecomposition(opts.OutputPath, decomp.root, decomp.treewidth, decomp.verticesCount);
+            SaveDecomposition(opts.OutputPath, newDecomp, newTreeWidth, decomp.verticesCount);
         }
 
         static void HandleParseError(IEnumerable<Error> errs)
