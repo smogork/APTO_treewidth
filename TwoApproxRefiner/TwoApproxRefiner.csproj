@@ -6,8 +6,11 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\CommonCode\CommonCode.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
       <PackageReference Include="CommandLineParser" Version="2.8.0" />
-      <PackageReference Include="QuickGraph" Version="3.6.61119.7" />
     </ItemGroup>
 
 </Project>
