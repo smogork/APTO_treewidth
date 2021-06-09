@@ -191,7 +191,7 @@ namespace TwoApproxRefiner
                     if (val < splitValue)
                     {
                         splitValue = val;
-                        bestSplit = split;
+                        bestSplit = new Long4Number(split);
                     }
                 }
             }
@@ -207,6 +207,7 @@ namespace TwoApproxRefiner
         public (DecompositionNode refinedDecomposition, int refinedTreewidth) RefineDecomposition()
         {
             //Tutaj dodac algorytm poprawiania
+            var res = FindSplitOn(root);
             
             return (root, treeWidth);
         }

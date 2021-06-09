@@ -20,6 +20,16 @@ namespace TwoApproxRefiner
         {
             Representation = new byte[length];
         }
+
+        /// <summary>
+        /// KOnstruktor wykonujący kopię głęboką.
+        /// </summary>
+        /// <param name="other">Źróðło do kopiowania</param>
+        public Long4Number(Long4Number other)
+        {
+            Representation = new byte[other.Length];
+            other.Representation.CopyTo(Representation, 0);
+        }
         
         /// <summary>
         /// Zwiększa liczbę o 1.
