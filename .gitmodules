@@ -2,3 +2,6 @@
 	path = flow-cutter-pace17
 	url = https://github.com/smogork/flow-cutter-pace17
 
+[submodule "PACE2017-TrackA"]
+	path = PACE2017-TrackA
+	url = https://github.com/smogork/PACE2017-TrackA
