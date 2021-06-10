@@ -56,8 +56,8 @@ namespace CommonCode.Converters
 
                 foreach (DecompositionNode child in node.Children)
                 {
-                    order.Enqueue((this.node_counter++, child));
-                    edges.Add((number, this.node_counter));
+                    order.Enqueue((this.node_counter, child));
+                    edges.Add((number, this.node_counter++));
                 }
             }
         }

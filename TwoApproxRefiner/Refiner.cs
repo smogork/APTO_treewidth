@@ -64,14 +64,15 @@ namespace TwoApproxRefiner
         #endregion
         
         private Graph graph;
-        private DecompositionNode root;
+        //private DecompositionNode root;
         private int treeWidth;
+        private int k;
         
-        public Refiner(Graph graph, DecompositionNode root, int treewidth)
+        public Refiner(Graph graph, int treewidth)
         {
             this.graph = graph;
-            this.root = root;
             this.treeWidth = treewidth;
+            this.k = 1;
         }
 
         #region Split
@@ -101,7 +102,7 @@ namespace TwoApproxRefiner
         {
             for (int itA = 0; itA < split.Length; ++itA)
             {
-                if (split.Representation[itA] == A)
+                if (split.Representation[itA] == A || split.Representation[itA] == B)
                 {
                     for (int itB = itA + 1; itB < split.Length; ++itB)
                     {
@@ -204,12 +205,122 @@ namespace TwoApproxRefiner
         }
         #endregion
 
-        public (DecompositionNode refinedDecomposition, int refinedTreewidth) RefineDecomposition()
+        public (DecompositionNode refinedDecomposition, int refinedTreewidth) RefineDecomposition(DecompositionNode root)
         {
             //Tutaj dodac algorytm poprawiania
-            var res = FindSplitOn(root);
+            while (true)
+            {
+                var wBag = FindLargestBag(root);
+                if (wBag.Vertices.Count <= 2 * k + 2)
+                    return (root, wBag.Vertices.Count);
+                var split = FindSplitOn(wBag);
+                if (split == null)
+                    return (root, wBag.Vertices.Count);
+                var t1Bag = BuildDecomposition(wBag, split.C1, split.X);
+                var t2Bag = BuildDecomposition(wBag, split.C2, split.X);
+                var t3Bag = BuildDecomposition(wBag, split.C3, split.X);
+                root = Merge(t1Bag, t2Bag, t3Bag, split.X);
+            }
             
-            return (root, treeWidth);
+            return (root, CountTreewidth(root));
         }
+        private DecompositionNode FindLargestBag(DecompositionNode decompositionNode)
+        {
+            var largestBag = decompositionNode;
+            for (int i = 0; i < decompositionNode.Children.Count; ++i)
+                if (FindLargestBag(decompositionNode.Children[i]).Vertices.Count > largestBag.Vertices.Count)
+                    largestBag = decompositionNode.Children[i];
+            return largestBag;
+        }
+
+        private int CountTreewidth(DecompositionNode root)
+        {
+            Queue<DecompositionNode> order = new Queue<DecompositionNode>();
+            order.Enqueue(root);
+
+            int treewidth = 0;
+            while (order.Count > 0)
+            {
+                DecompositionNode node = order.Dequeue();
+
+                int tw = node.Children.Count - 1;
+                if (tw > treewidth)
+                    treewidth = tw;
+
+                foreach (DecompositionNode child in node.Children)
+                    order.Enqueue(child);
+            }
+
+            return treewidth;
+        }
+        
+        #region Merge
+        private DecompositionNode BuildDecomposition(DecompositionNode wBag, 
+             HashSet<int> cSet, HashSet<int> xSet)
+        {
+            var homeBag = new DecompositionNode[graph.VerticesCount];
+            var vertices = new List<int>();
+            for (int i = 0; i < wBag.Vertices.Count; ++i) 
+                if (cSet.Contains(wBag.Vertices[i]) || xSet.Contains(wBag.Vertices[i]))
+                    vertices.Add(wBag.Vertices[i]);
+            var t = new DecompositionNode(vertices);
+            t.Distance = 0;
+            var result = t;
+            var queue = new Queue<(DecompositionNode originalNode, DecompositionNode newNode)>();
+            queue.Enqueue((wBag, t));
+            while (queue.Count > 0)
+            {
+                (wBag, t) = queue.Dequeue();
+                for (int i = 0; i < wBag.Children.Count; ++i)
+                {
+                    vertices = new List<int>();
+                    for (int j = 0; j < wBag.Children[i].Vertices.Count; ++j)
+                        if (cSet.Contains(wBag.Children[i].Vertices[j]) ||
+                            xSet.Contains(wBag.Children[i].Vertices[j]))
+                            vertices.Add(wBag.Children[i].Vertices[j]);
+                    var kid = new DecompositionNode(vertices);
+                    kid.Distance = t.Distance + 1;
+                    kid.Parent = t;
+                    t.Children.Add(kid);
+                    queue.Enqueue((wBag.Children[i], kid));
+                }
+                for (int i = 0; i < t.Vertices.Count; ++i)
+                    if (homeBag[t.Vertices[i]] != null)
+                        homeBag[t.Vertices[i]] = t;
+            }
+            foreach (var x in xSet)
+                FillPath(wBag, homeBag[x], x);
+            return result;
+        }
+        private void FillPath(DecompositionNode wBag, DecompositionNode homeBag, int x)
+        {
+            if (homeBag == null)
+                return;
+            if (!homeBag.Vertices.Contains(x)) 
+                homeBag.Vertices.Add(x);
+            if (homeBag == wBag)
+                return;
+            var nextBag = homeBag.Parent;
+            for (int i = 0; i < homeBag.Children.Count; ++i)
+                if (homeBag.Children[i].Distance == homeBag.Distance - 1)
+                {
+                    nextBag = homeBag.Children[i];
+                    break;
+                }
+            FillPath(wBag, nextBag, x);
+        }
+        private DecompositionNode Merge(DecompositionNode t1, DecompositionNode t2, DecompositionNode t3,
+            HashSet<int> x)
+        {
+            var xBag = new DecompositionNode(x);
+            xBag.Children.Add(t1);
+            xBag.Children.Add(t2);
+            xBag.Children.Add(t3);
+            t1.Parent = xBag;
+            t2.Parent = xBag;
+            t2.Parent = xBag;
+            return xBag;
+        }
+        #endregion
     }
 }

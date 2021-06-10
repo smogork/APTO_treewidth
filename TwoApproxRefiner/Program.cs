@@ -60,11 +60,11 @@ namespace TwoApproxRefiner
             Graph g = ReadGraph(opts.InputGraphPath);
 
             //2. Wykonaj algorytm
-            Refiner refiner = new Refiner(g, decomp.root, decomp.treewidth);
-            (DecompositionNode newDecomp, int newTreeWidth) = refiner.RefineDecomposition();
+            Refiner refiner = new Refiner(g, decomp.treewidth - 1);
+            (DecompositionNode newDecomp, int newTreeWidth) = refiner.RefineDecomposition(decomp.root);
 
             //3. Wypisz wyniki
-            SaveDecomposition(opts.OutputPath, newDecomp, newTreeWidth, decomp.verticesCount);
+            SaveDecomposition(opts.OutputPath, newDecomp, newTreeWidth + 1, decomp.verticesCount);
         }
 
         static void HandleParseError(IEnumerable<Error> errs)
