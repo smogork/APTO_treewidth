@@ -214,7 +214,7 @@ namespace TwoApproxRefiner
                 var wBag = FindLargestBag(this.root);
                 if (wBag.Vertices.Count <= 2 * k + 2)
                     return (this.root, wBag.Vertices.Count);
-                var split = FindSplitOn(this.root);
+                var split = FindSplitOn(wBag);
                 if (split == null)
                     return (this.root, wBag.Vertices.Count);
                 var t1Bag = BuildDecomposition(wBag, split.C1, split.X);
