@@ -193,7 +193,7 @@ namespace TwoApproxRefiner
                     if (val < splitValue)
                     {
                         splitValue = val;
-                        bestSplit = split;
+                        bestSplit = new Long4Number(split);
                     }
                 }
             }
