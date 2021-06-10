@@ -64,14 +64,13 @@ namespace TwoApproxRefiner
         #endregion
         
         private Graph graph;
-        private DecompositionNode root;
+        //private DecompositionNode root;
         private int treeWidth;
         private int k;
         
-        public Refiner(Graph graph, DecompositionNode root, int treewidth)
+        public Refiner(Graph graph, int treewidth)
         {
             this.graph = graph;
-            this.root = root;
             this.treeWidth = treewidth;
             this.k = 1;
         }
@@ -103,7 +102,7 @@ namespace TwoApproxRefiner
         {
             for (int itA = 0; itA < split.Length; ++itA)
             {
-                if (split.Representation[itA] == A)
+                if (split.Representation[itA] == A || split.Representation[itA] == B)
                 {
                     for (int itB = itA + 1; itB < split.Length; ++itB)
                     {
@@ -206,23 +205,24 @@ namespace TwoApproxRefiner
         }
         #endregion
 
-        public (DecompositionNode refinedDecomposition, int refinedTreewidth) RefineDecomposition()
+        public (DecompositionNode refinedDecomposition, int refinedTreewidth) RefineDecomposition(DecompositionNode root)
         {
             //Tutaj dodac algorytm poprawiania
             while (true)
             {
-                var wBag = FindLargestBag(this.root);
+                var wBag = FindLargestBag(root);
                 if (wBag.Vertices.Count <= 2 * k + 2)
-                    return (this.root, wBag.Vertices.Count);
+                    return (root, wBag.Vertices.Count);
                 var split = FindSplitOn(wBag);
                 if (split == null)
-                    return (this.root, wBag.Vertices.Count);
+                    return (root, wBag.Vertices.Count);
                 var t1Bag = BuildDecomposition(wBag, split.C1, split.X);
                 var t2Bag = BuildDecomposition(wBag, split.C2, split.X);
                 var t3Bag = BuildDecomposition(wBag, split.C3, split.X);
-                this.root = Merge(t1Bag, t2Bag, t3Bag, split.X);
+                root = Merge(t1Bag, t2Bag, t3Bag, split.X);
             }
-            return (root, treeWidth);
+            
+            return (root, CountTreewidth(root));
         }
         private DecompositionNode FindLargestBag(DecompositionNode decompositionNode)
         {
@@ -232,6 +232,28 @@ namespace TwoApproxRefiner
                     largestBag = decompositionNode.Children[i];
             return largestBag;
         }
+
+        private int CountTreewidth(DecompositionNode root)
+        {
+            Queue<DecompositionNode> order = new Queue<DecompositionNode>();
+            order.Enqueue(root);
+
+            int treewidth = 0;
+            while (order.Count > 0)
+            {
+                DecompositionNode node = order.Dequeue();
+
+                int tw = node.Children.Count - 1;
+                if (tw > treewidth)
+                    treewidth = tw;
+
+                foreach (DecompositionNode child in node.Children)
+                    order.Enqueue(child);
+            }
+
+            return treewidth;
+        }
+        
         #region Merge
         private DecompositionNode BuildDecomposition(DecompositionNode wBag, 
              HashSet<int> cSet, HashSet<int> xSet)
