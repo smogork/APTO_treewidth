@@ -212,17 +212,15 @@ namespace TwoApproxRefiner
             {
                 var wBag = FindLargestBag(root);
                 if (wBag.Vertices.Count <= 2 * k + 2)
-                    return (root, wBag.Vertices.Count);
+                    return (root, CountTreewidth(root));
                 var split = FindSplitOn(wBag);
                 if (split == null)
-                    return (root, wBag.Vertices.Count);
+                    return (root, CountTreewidth(root));
                 var t1Bag = BuildDecomposition(wBag, split.C1, split.X);
                 var t2Bag = BuildDecomposition(wBag, split.C2, split.X);
                 var t3Bag = BuildDecomposition(wBag, split.C3, split.X);
                 root = Merge(t1Bag, t2Bag, t3Bag, split.X);
             }
-            
-            return (root, CountTreewidth(root));
         }
         private DecompositionNode FindLargestBag(DecompositionNode decompositionNode)
         {
