@@ -31,6 +31,14 @@
             "args": ["graphs/graph6/trees/trees09.g6", "graphs/pace/trees/test"]
         },
         {
+            "name": "Debug: timer",
+            "type": "python",
+            "request": "launch",
+            "program": "timer.py",
+            "console": "integratedTerminal",
+            "args": ["cat < test.gr"]
+        },
+        {
             "name": "Debug: PACE",
             "type": "cppdbg",
             "request": "launch",
