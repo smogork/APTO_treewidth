@@ -236,7 +236,7 @@ namespace TwoApproxRefiner
         private DecompositionNode BuildDecomposition(DecompositionNode wBag, 
              HashSet<int> cSet, HashSet<int> xSet)
         {
-            var homeBag = new DecompositionNode[xSet.Count];
+            var homeBag = new DecompositionNode[graph.VerticesCount];
             var vertices = new List<int>();
             for (int i = 0; i < wBag.Vertices.Count; ++i) 
                 if (cSet.Contains(wBag.Vertices[i]) || xSet.Contains(wBag.Vertices[i]))
@@ -291,9 +291,9 @@ namespace TwoApproxRefiner
             HashSet<int> x)
         {
             var xBag = new DecompositionNode(x);
-            xBag.Children[0] = t1;
-            xBag.Children[1] = t2;
-            xBag.Children[2] = t3;
+            xBag.Children.Add(t1);
+            xBag.Children.Add(t2);
+            xBag.Children.Add(t3);
             t1.Parent = xBag;
             t2.Parent = xBag;
             t2.Parent = xBag;
