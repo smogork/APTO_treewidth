@@ -25,8 +25,8 @@ namespace Randomizer
             }
             else
             {
-                //to zmienic na randomizer od oskara
-                randomizer = new SimpleGraphRandomizer(opts.VerticesCount, opts.AdditionalParameter);
+                //RAK TODO: to nie zadziala
+                randomizer = new DecompositionGenerator(opts.AdditionalParameter, opts.VerticesCount, 10);
             }
             
             PaceOutputGraph output = new PaceOutputGraph();

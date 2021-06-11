@@ -11,7 +11,7 @@ namespace Coloring
         [Value(1, MetaName="inputGraphPath", Required=true, HelpText="Path to file with graph PACE2017 format.")]
         public string InputGraphPath { get; set; }
 
-        [Option('o', "outputPath", Required=false, HelpText="Path to output file with refined decomposition.")]
-        public string OutputPath { get; set; }
+        [Option('c', "colorCount", Required=true, HelpText="Number of colors.")]
+        public int ColorCount { get; set; }
     }
 }
