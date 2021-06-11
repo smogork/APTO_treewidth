@@ -14,8 +14,9 @@ if __name__ == "__main__":
 
     for v in vs:
         print(v)
+        b = int(v/5)
         
-        args = f'{v} {int(v/5)} -t {tw}'
-        cmd = f'dotnet run --no-build -p /home/oskar/RiderProjects/APTO_treewidth/Randomizer -- {args} > {output_folder}/g_{v}_{int(v/5)}_{tw}.gr'
+        args = f'{v} {b} -t {tw}'
+        cmd = f'./Randomizer/bin/Debug/net5.0/Randomizer {args} > {output_folder}/g_{v}_{b}_{tw}.gr'
 
         os.system(cmd)
