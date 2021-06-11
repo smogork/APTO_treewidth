@@ -19,14 +19,13 @@ namespace Randomizer
         static void RunOptions(Options opts)
         {
             IGraphRandomizer randomizer;
-            if (!opts.KnownTreewidth)
+            if (opts.KnownTreewidth == 0)
             {
                 randomizer = new SimpleGraphRandomizer(opts.VerticesCount, opts.AdditionalParameter);
             }
             else
             {
-                //RAK TODO: to nie zadziala
-                randomizer = new DecompositionGenerator(opts.AdditionalParameter, opts.VerticesCount, 10);
+                randomizer = new DecompositionGenerator(opts.KnownTreewidth, opts.AdditionalParameter, opts.VerticesCount);
             }
             
             PaceOutputGraph output = new PaceOutputGraph();

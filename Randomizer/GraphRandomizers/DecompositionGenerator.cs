@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using CommonCode;
+using CommonCode.Converters;
 
 namespace Randomizer.GraphRandomizers
 {
     public class DecompositionGenerator: IGraphRandomizer
     {
         private int tw, bagsCount, nodesCount;
-        
         private DecompositionNode root = new DecompositionNode(new List<int>());
 
         public DecompositionGenerator(int tw, int bagsCount, int nodesCount)
@@ -50,19 +50,26 @@ namespace Randomizer.GraphRandomizers
                 int bagNumber;
                 while (true)
                 {
-                    bagNumber = random.Next(0, numberOfBags);
-                    if (bags[bagNumber].Vertices.Count < tw - 1)
+                    bagNumber = random.Next(0, bagsCount);
+                    if (bags[bagNumber].Vertices.Count < tw)
                         break;
                 }
                 bags[bagNumber].Vertices.Add(i);
             }
             // tworzenie grafu odpowiadającego dekompozycji
             graph = new Graph(nodesCount);
-            foreach (var bag in bags) 
+            int treewidth = 0;
+            foreach (var bag in bags)
+            {
+                treewidth = Math.Max(treewidth, bag.Vertices.Count);
+                
                 for (int i = 0; i < bag.Vertices.Count; ++i)
-                    for (int j = i + 1; j < bag.Vertices.Count; ++j)
-                        graph.AddEdge(i, j);
+                for (int j = i + 1; j < bag.Vertices.Count; ++j)
+                    graph.AddEdge(bag.Vertices[i], bag.Vertices[j]);
+            }
 
+            //PaceOutputDecomposition outputDecomposition = new PaceOutputDecomposition();
+            //outputDecomposition.Write(Console.OpenStandardOutput(), root, treewidth, nodesCount);
             return graph;
         }
     }
