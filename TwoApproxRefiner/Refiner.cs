@@ -72,7 +72,7 @@ namespace TwoApproxRefiner
         {
             this.graph = graph;
             this.treeWidth = treewidth;
-            this.k = 1;
+            this.k = Math.Max(treewidth / 4, 1);
         }
 
         #region Split
@@ -106,7 +106,7 @@ namespace TwoApproxRefiner
                 {
                     for (int itB = itA + 1; itB < split.Length; ++itB)
                     {
-                        if (graph.IsConnected(itA, itB))
+                        if (graph.IsEdge(itA, itB))
                             return true;
                     }
                 }
@@ -241,7 +241,7 @@ namespace TwoApproxRefiner
             {
                 DecompositionNode node = order.Dequeue();
 
-                int tw = node.Children.Count - 1;
+                int tw = node.Vertices.Count - 1;
                 if (tw > treewidth)
                     treewidth = tw;
 

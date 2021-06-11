@@ -12,5 +12,8 @@ namespace TwoApproxRefiner
 
         [Option('o', "outputPath", Required=false, HelpText="Path to output file with refined decomposition.")]
         public string OutputPath { get; set; }
+        
+        /*[Option('k', "outputPath", Required=true, HelpText="Treewidth of graph")]
+        public int K { get; set; }*/
     }
 }

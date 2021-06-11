@@ -16,7 +16,7 @@ namespace CommonCode.Converters
         private List<(int u, int v)> edges;
         private int node_counter;
         
-        public void Write(System.IO.Stream stream, DecompositionNode root, int tw, int verticesCount)
+        public void Write(Stream stream, DecompositionNode root, int tw, int verticesCount)
         {
             var writer = new StreamWriter(stream);
 
