@@ -43,7 +43,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "flow-cutter-pace17/flow_cutter_pace17",
-            "args": ["graphs/trees/pace/test_1.gr"],
+            "args": ["graphs/pace/raport/random/g_10_20.gr"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
