@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using CommandLine;
 using CommonCode;
 using CommonCode.Converters;
 using Randomizer.GraphRandomizers;
@@ -9,43 +11,34 @@ namespace Randomizer
     {
         static void Main(string[] args)
         {
-            PaceOutputGraph output = new PaceOutputGraph();
-            SimpleGraphRandomizer randomizer = new SimpleGraphRandomizer(4, 6);
+            CommandLine.Parser.Default.ParseArguments<Options>(args)
+                .WithParsed(RunOptions)
+                .WithNotParsed(HandleParseError);
+        }
 
-            output.Write(Console.OpenStandardOutput(), randomizer.Randomize());
-
-            UniqueRandom rand = new UniqueRandom(10);
-
-            Console.WriteLine(rand.Next());
-            Console.WriteLine(rand.Next());
-            Console.WriteLine(rand.Next());
-            Console.WriteLine(rand.Next());
-            Console.WriteLine(rand.Next());
-            Console.WriteLine(rand.Next());
-            Console.WriteLine(rand.Next());
-            Console.WriteLine(rand.Next());
-            Console.WriteLine(rand.Next());
-            Console.WriteLine(rand.Next());
-
-            rand.NonrepetableReset();
-            Console.WriteLine("Reset");
-            Console.WriteLine(rand.Next());
-            Console.WriteLine(rand.Next());
-            Console.WriteLine(rand.Next());
-            Console.WriteLine(rand.Next());
-            Console.WriteLine(rand.Next());
-            Console.WriteLine(rand.Next());
-            Console.WriteLine(rand.Next());
-            Console.WriteLine(rand.Next());
-            Console.WriteLine(rand.Next());
-            Console.WriteLine(rand.Next());
-            try
+        static void RunOptions(Options opts)
+        {
+            IGraphRandomizer randomizer;
+            if (!opts.KnownTreewidth)
             {
-                Console.WriteLine(rand.Next());
+                randomizer = new SimpleGraphRandomizer(opts.VerticesCount, opts.AdditionalParameter);
             }
-            catch (OverflowException e)
+            else
             {
-                Console.WriteLine("Overflow exception occured");
+                //to zmienic na randomizer od oskara
+                randomizer = new SimpleGraphRandomizer(opts.VerticesCount, opts.AdditionalParameter);
+            }
+            
+            PaceOutputGraph output = new PaceOutputGraph();
+            output.Write(Console.OpenStandardOutput(), randomizer.Randomize());
+        }
+
+        static void HandleParseError(IEnumerable<Error> errs)
+        {
+            Console.WriteLine("Errors:");
+            foreach(Error e in errs)
+            {
+                Console.Error.WriteLine(e.ToString());
             }
         }
     }
