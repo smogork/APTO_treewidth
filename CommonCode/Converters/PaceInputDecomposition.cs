@@ -34,7 +34,7 @@ namespace CommonCode.Converters
                     throw new ArgumentException($"Bag {i + 1} error: wrong format");
                 
                 //Zakładamy, że wierzchołki grafu są numerowane od 0 w reprezentacji wewnętrznej.
-                bags[i] = new DecompositionNode(bag.Skip(2).Select(v => int.Parse(v) - 1));
+                bags[i] = new DecompositionNode(bag.Skip(2).Where(v => int.TryParse(v, out int t)).Select(v => int.Parse(v) - 1));
                 neighbours[i] = new List<int>();
             }
             

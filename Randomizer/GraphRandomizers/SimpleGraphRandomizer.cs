@@ -13,7 +13,7 @@ namespace Randomizer.GraphRandomizers
         {
             this.verticesCount = verticesCount;
             this.edgesCount = edgesCount;
-            rand = new UniqueRandom((verticesCount - 1) * (verticesCount - 2));
+            rand = new UniqueRandom(((verticesCount) * (verticesCount - 1)) / 2);
 
             if (this.edgesCount > rand.K)
                 throw new ArgumentException($"There are to many edges to generate. Maximal number of edges" +
