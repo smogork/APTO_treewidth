@@ -22,13 +22,21 @@
             "type": "coreclr",
             "request": "attach"
         },
-        {
+        {6
             "name": "Debug: g6 -> pace",
             "type": "python",
             "request": "launch",
             "program": "graph6_to_PACE.py",
             "console": "integratedTerminal",
             "args": ["graphs/graph6/trees/trees09.g6", "graphs/pace/trees/test"]
+        },
+        {
+            "name": "Debug: coloring_script",
+            "type": "python",
+            "request": "launch",
+            "program": "scripts/color_graph.py",
+            "console": "integratedTerminal",
+            "args": ["graphs/pace/raport/zmienne_worki", "decompositions/zmienne_worki"]
         },
         {
             "name": "Debug: timer",
