@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CommonCode
 {
@@ -11,6 +12,7 @@ namespace CommonCode
     public class Graph
     {
         public int VerticesCount { get; private set; }
+        public int EdgesCount => edges.Count();
         /// <summary>
         /// Wierzchołki numerujemy od 0
         /// </summary>
@@ -45,6 +47,11 @@ namespace CommonCode
                 throw new ArgumentException("Vertex cannot has edge to itself");
             
             return edges.Add(CorrectOrder(u, v));
+        }
+
+        public IEnumerable<(int u, int v)> GetAllEdges()
+        {
+            return edges.ToList();
         }
 
         public bool IsConnected(int u, int v)
