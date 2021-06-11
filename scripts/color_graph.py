@@ -14,9 +14,9 @@ if __name__ == '__main__':
 
     graph_files = onlyfiles = [f for f in os.listdir(graphs_folder) if os.path.isfile(os.path.join(graphs_folder, f))]
     for file in graph_files:
-        print(file)
+        #print(file)
 
         without_extension = os.path.splitext(file)[0]
         
-        os.system(f'./timer.py \"./Coloring/bin/Debug/net5.0/Coloring {os.path.join(decomposition_folder, without_extension+".td")}\"')
+        os.system(f'./timer.py \"./Coloring/bin/Debug/net5.0/Coloring {os.path.join(decomposition_folder, without_extension+".td")} {os.path.join(graphs_folder, file)} -c 10\"')
         # {os.path.join(graphs_folder, file)} -o {refine_folder}/{without_extension}.td')
