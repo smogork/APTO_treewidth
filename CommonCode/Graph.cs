@@ -49,12 +49,17 @@ namespace CommonCode
             return edges.Add(CorrectOrder(u, v));
         }
 
+        public bool AddEdge((int u, int v) edge)
+        {
+            return AddEdge(edge.u, edge.v);
+        }
+
         public IEnumerable<(int u, int v)> GetAllEdges()
         {
             return edges.ToList();
         }
 
-        public bool IsConnected(int u, int v)
+        public bool IsEdge(int u, int v)
         {
             if (u == v)
                 return true;

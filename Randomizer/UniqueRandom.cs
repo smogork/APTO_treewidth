@@ -21,7 +21,7 @@ namespace Randomizer
             rand = new Random();
             seed = rand.Next();
 
-            Reset();
+            RepetableReset();
         }
         
         public UniqueRandom(int k, int seed)
@@ -29,13 +29,18 @@ namespace Randomizer
             K = k;
             this.seed = seed;
 
-            Reset();
+            RepetableReset();
         }
 
-        public void Reset()
+        public void RepetableReset()
+        {
+            rand = new Random(seed);
+            NonrepetableReset();
+        }
+
+        public void NonrepetableReset()
         {
             occurences = new BitArray(K);
-            rand = new Random(seed);
             random_counter = 0;
         }
 

@@ -106,7 +106,7 @@ namespace TwoApproxRefiner
                 {
                     for (int itB = itA + 1; itB < split.Length; ++itB)
                     {
-                        if (graph.IsConnected(itA, itB))
+                        if (graph.IsEdge(itA, itB))
                             return true;
                     }
                 }

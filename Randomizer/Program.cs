@@ -1,6 +1,7 @@
 ﻿using System;
 using CommonCode;
 using CommonCode.Converters;
+using Randomizer.GraphRandomizers;
 
 namespace Randomizer
 {
@@ -9,12 +10,9 @@ namespace Randomizer
         static void Main(string[] args)
         {
             PaceOutputGraph output = new PaceOutputGraph();
-            Graph path = new Graph(4);
-            path.AddEdge(0, 1);
-            path.AddEdge(2, 1);
-            path.AddEdge(3, 2);
+            SimpleGraphRandomizer randomizer = new SimpleGraphRandomizer(4, 6);
 
-            output.Write(Console.OpenStandardOutput(), path);
+            output.Write(Console.OpenStandardOutput(), randomizer.Randomize());
 
             UniqueRandom rand = new UniqueRandom(10);
 
@@ -29,7 +27,7 @@ namespace Randomizer
             Console.WriteLine(rand.Next());
             Console.WriteLine(rand.Next());
 
-            rand.Reset();
+            rand.NonrepetableReset();
             Console.WriteLine("Reset");
             Console.WriteLine(rand.Next());
             Console.WriteLine(rand.Next());
