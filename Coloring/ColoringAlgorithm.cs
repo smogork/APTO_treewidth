@@ -73,7 +73,12 @@ namespace Coloring
                     int nodeIndex = Convert.ToInt32(subs[1]);
                     List<int> vertices = new List<int>();
                     for (int i = 2; i < subs.Length; ++i)
+                    {
+                        if (subs[i] == "")
+                            continue;
                         vertices.Add(Convert.ToInt32(subs[i]));
+                    }
+
                     decompositionNodes[nodeIndex] = new DecompositionNode(vertices);
                 }
                 else

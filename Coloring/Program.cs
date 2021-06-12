@@ -16,8 +16,10 @@ namespace Coloring
         static void RunOptions(Options opts)
         {
             //1. Wczytaj dane z pliku
+            var coloringAlgorithm = new ColoringAlgorithm(opts.InputGraphPath, opts.InputDecompositionPath, opts.ColorCount);
             
             //2. Wykonaj algorytm
+            coloringAlgorithm.FindColoring();
 
             //3. Wypisz wyniki
         }

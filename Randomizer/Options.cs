@@ -11,6 +11,6 @@ namespace Randomizer
         public int AdditionalParameter { get; set; }
 
         [Option('t', "outputPath", Required=false, HelpText="Generate graph of known treewidth. Then AdditionalParameter states for treewidth")]
-        public bool KnownTreewidth { get; set; }
+        public int KnownTreewidth { get; set; }
     }
 }
